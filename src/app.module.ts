@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import config from 'ormconfig';
 import { User } from './entities/user.entity';
 import { AuthModule } from './modules/auth/auth.module';
+import { SearchModule } from './modules/search/search/search.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './modules/auth/auth.module';
     TypeOrmModule.forRoot(config),
     TypeOrmModule.forFeature([User]),
     AuthModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
