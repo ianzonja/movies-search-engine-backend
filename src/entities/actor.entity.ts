@@ -12,6 +12,6 @@ export class Actor {
     @Column()
     surname: string;
 
-    @ManyToMany(type => Movie, movie => movie.actors, { eager: false })
+    @ManyToMany((type) => Movie, movie => movie.actors)
     movies: Movie[];
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Actor } from "./actor.entity";
 import { Genre } from "./genre.entity";
 
@@ -15,13 +15,24 @@ export class Movie {
 
     @Column()
     description: string;
-
-    @Column()
-    password: string;
-
-    @ManyToMany(type => Actor, actor => actor.movies, { eager: false })
+    
+    @ManyToMany((type) => Actor, {
+        cascade: true,
+    })
+    @JoinTable({
+        name: "movies_actors",
+        joinColumn: { name: "movieId", referencedColumnName: "id" },
+        inverseJoinColumn: { name: "actorId" }
+    })
     actors: Actor[];
 
-    @ManyToMany(type => Genre, genre => genre.movies, { eager: false })
+    @ManyToMany((type) => Genre, {
+        cascade: true,
+    })
+    @JoinTable({
+        name: "movies_genres",
+        joinColumn: { name: "movieId", referencedColumnName: "id" },
+        inverseJoinColumn: { name: "genreId" }
+    })
     genres: Genre[];
 }
