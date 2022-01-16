@@ -1,6 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Actor } from "./actor.entity";
 import { Genre } from "./genre.entity";
+import { Search } from "./search.entity";
 
 @Entity()
 export class Movie {
@@ -15,7 +16,7 @@ export class Movie {
 
     @Column()
     description: string;
-    
+
     @ManyToMany((type) => Actor, {
         cascade: true,
     })
@@ -35,4 +36,14 @@ export class Movie {
         inverseJoinColumn: { name: "genreId" }
     })
     genres: Genre[];
+
+    @ManyToMany((type) => Search, {
+        cascade: true,
+    })
+    @JoinTable({
+        name: "movies_searches",
+        joinColumn: { name: "mobieId", referencedColumnName: "id" },
+        inverseJoinColumn: { name: "searchId" }
+    })
+    searches: Search[];
 }
